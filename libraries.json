@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Zustand",
+    "slug": "zustand",
+    "category": "State Management",
+    "description": "Ein kleines, schnelles und skalierbares Statusverwaltungssystem, das auf vereinfachten Flux-Prinzipien basiert. Kommt ohne viel Boilerplate aus.",
+    "bundle_size_kb": 1.2,
+    "github_stars": 45200,
+    "weekly_downloads": 3500000,
+    "license": "MIT",
+    "has_security_policy": true,
+    "unresolved_cves": 0,
+    "pros": ["Extrem leichtgewichtig (1.2KB)", "Kein Context-Provider notwendig", "Sehr intuitive Hooks-API"],
+    "cons": ["Weniger vordefinierte Middleware als Redux", "Lernkurve bei komplexen Multi-Store-Architekturen"],
+    "code_example": "import { create } from 'zustand'\n\nconst useStore = create((set) => ({\n  bears: 0,\n  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),\n}))"
+  },
+  {
+    "id": 2,
+    "name": "Redux Toolkit",
+    "slug": "redux-toolkit",
+    "category": "State Management",
+    "description": "Der offizielle, meinungsstarke Werkzeugsatz für die effiziente Entwicklung mit Redux. Standard für große Enterprise-Anwendungen.",
+    "bundle_size_kb": 11.8,
+    "github_stars": 10500,
+    "weekly_downloads": 4200000,
+    "license": "MIT",
+    "has_security_policy": true,
+    "unresolved_cves": 0,
+    "pros": ["Großes Ökosystem und mächtige DevTools", "Strikte Architekturvorgaben ideal für große Teams", "Eingebautes RTK Query für Daten-Caching"],
+    "cons": ["Vergleichsweise hohe Bundle-Size", "Viel Boilerplate-Code trotz Toolkit", "Komplexes Konzept für Einsteiger"],
+    "code_example": "import { createSlice, configureStore } from '@reduxjs/store'\n\nconst counterSlice = createSlice({\n  name: 'counter',\n  initialState: { value: 0 },\n  reducers: { increment: state => { state.value += 1 } }\n})"
+  }
+]
