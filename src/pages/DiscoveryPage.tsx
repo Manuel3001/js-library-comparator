@@ -1,5 +1,5 @@
 import PageLayout from '../components/PageLayout';
-import styles from './DiscoveryPage.module.css';
+import styles from './moduleStyles/DiscoveryPage.module.css';
 
 export default function DiscoveryPage() {
   return (

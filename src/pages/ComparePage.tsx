@@ -1,5 +1,5 @@
 import PageLayout from '../components/PageLayout';
-import styles from './ComparePage.module.css';
+import styles from './moduleStyles/ComparePage.module.css';
 
 export default function ComparePage() {
   return (
