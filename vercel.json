@@ -5,8 +5,7 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/(discover|compare)",
-      "destination": "/index.html"
+"source": "/(discover|discovery|compare)",      "destination": "/index.html"
     }
   ]
 }
