@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom'; // NEU: Für den URL-Wechsel
+import { useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown'; // NEU: Für das KI-Markdown
 import PageLayout from '../components/PageLayout';
 import styles from './moduleStyles/DiscoveryPage.module.css';
 import librariesData from '../data/libraries.json';
@@ -8,13 +9,17 @@ import type { Library } from '../types';
 const libraries = librariesData as Library[];
 
 export default function DiscoveryPage() {
-  const navigate = useNavigate(); // Initialisiert das Routing-Werkzeug
+  const navigate = useNavigate();
 
+  // Bestehende States
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
-  // NEU: Der State für die ausgewählten Libraries (speichert die Slugs als Strings)
   const [selectedLibs, setSelectedLibs] = useState<string[]>([]);
+
+  // NEUE States für die KI
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
 
   const categories = Array.from(new Set(libraries.map(lib => lib.category)));
 
@@ -28,24 +33,48 @@ export default function DiscoveryPage() {
     });
   }, [searchTerm, selectedCategory]);
 
-  // NEU: Logik zum Hinzufügen/Entfernen einer Library
   const toggleLibrarySelection = (slug: string) => {
     setSelectedLibs((prevSelected) => {
-      // Wenn der Slug schon im Array ist -> entferne ihn
-      if (prevSelected.includes(slug)) {
-        return prevSelected.filter((item) => item !== slug);
-      }
-      // Ansonsten -> füge ihn hinzu
+      if (prevSelected.includes(slug)) return prevSelected.filter((item) => item !== slug);
       return [...prevSelected, slug];
     });
   };
 
-  // NEU: Der Klick auf den finalen "Vergleichen"-Button
   const handleCompareClick = () => {
-    // Wir verbinden das Array zu einem Text: ['zustand', 'redux'] -> "zustand,redux"
     const queryString = selectedLibs.join(',');
-    // Schickt den Nutzer zur Compare-Seite und hängt die Auswahl als URL-Parameter an
     navigate(`/compare?libs=${queryString}`);
+  };
+
+  // NEU: Logik für die Parameter-Tags
+  const appendTagToPrompt = (tag: string) => {
+    setAiPrompt(prev => prev ? `${prev} ${tag}` : tag);
+  };
+
+  // NEU: Die Funktion, die mit unserem Vercel-Backend spricht
+  const askArchitectAI = async () => {
+    if (!aiPrompt.trim()) return;
+    
+    setIsGenerating(true);
+    setAiResponse(null); // Alte Antwort löschen
+
+    try {
+      // POST-Request an unsere eigene API (wird von Vercel lokal und live korrekt geroutet)
+      const res = await fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userPrompt: aiPrompt })
+      });
+
+      if (!res.ok) throw new Error('API Request failed');
+
+      const data = await res.json();
+      setAiResponse(data.recommendation);
+    } catch (error) {
+      console.error(error);
+      setAiResponse('**Fehler:** Konnte keine Verbindung zum Architekten-Modell herstellen. Bitte überprüfe das Backend-Log.');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -54,6 +83,50 @@ export default function DiscoveryPage() {
         <h1 className={styles.title}>Discovery</h1>
         <p className={styles.subtitle}>Finde und vergleiche die besten Werkzeuge für dein Projekt.</p>
         
+        {/* --- NEU: AI Architect Section --- */}
+        <section className={styles.aiSection}>
+          <div className={styles.aiHeader}>
+            <span style={{ fontSize: '1.5rem' }}>⚡️</span>
+            <h2 className={styles.aiTitle}>Ask the Architect AI</h2>
+          </div>
+          
+          <div className={styles.aiInputWrapper}>
+            <textarea 
+              className={styles.aiTextarea}
+              placeholder="Beschreibe dein Projekt (z.B. 'Ich baue ein extrem schnelles Dashboard mit vielen Echtzeit-Daten...')"
+              value={aiPrompt}
+              onChange={(e) => setAiPrompt(e.target.value)}
+            />
+            
+            <div className={styles.aiControls}>
+              {/* Die Struktur-Tags zum Anklicken */}
+              <div className={styles.aiTagGroup}>
+                <button className={styles.aiTagBtn} onClick={() => appendTagToPrompt('[Fokus: Bundle-Size]')}>+ Bundle-Size</button>
+                <button className={styles.aiTagBtn} onClick={() => appendTagToPrompt('[Fokus: Security/0 CVEs]')}>+ Security</button>
+                <button className={styles.aiTagBtn} onClick={() => appendTagToPrompt('[Typ: Backend]')}>+ Backend</button>
+                <button className={styles.aiTagBtn} onClick={() => appendTagToPrompt('[Typ: Frontend]')}>+ Frontend</button>
+              </div>
+
+              <button 
+                className={styles.aiSubmitBtn} 
+                onClick={askArchitectAI}
+                disabled={isGenerating || !aiPrompt.trim()}
+              >
+                {isGenerating ? 'Analysiere Architektur...' : 'Lösung generieren'}
+              </button>
+            </div>
+          </div>
+
+          {/* Die dynamische Antwortbox */}
+          {aiResponse && (
+            <div className={styles.aiResponseBox}>
+              {/* ReactMarkdown parst den Text von Gemini in echtes HTML */}
+              <ReactMarkdown>{aiResponse}</ReactMarkdown>
+            </div>
+          )}
+        </section>
+        {/* ------------------------------- */}
+
         <div className={styles.controls}>
           <input 
             type="text" 
@@ -67,17 +140,13 @@ export default function DiscoveryPage() {
             <button 
               className={selectedCategory === null ? `${styles.filterButton} ${styles.filterButtonActive}` : styles.filterButton}
               onClick={() => setSelectedCategory(null)}
-            >
-              Alle
-            </button>
+            >Alle</button>
             {categories.map(category => (
               <button 
                 key={category}
                 className={selectedCategory === category ? `${styles.filterButton} ${styles.filterButtonActive}` : styles.filterButton}
                 onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </button>
+              >{category}</button>
             ))}
           </div>
         </div>
@@ -85,11 +154,8 @@ export default function DiscoveryPage() {
 
       <div className={styles.grid}>
         {filteredLibraries.map((lib) => {
-          // Prüfen, ob DIESE Library aktuell ausgewählt ist
           const isSelected = selectedLibs.includes(lib.slug);
-
           return (
-            // Dynamische Klasse für den blauen Rand der Karte
             <article key={lib.id} className={`${styles.card} ${isSelected ? styles.cardActive : ''}`}>
               <div className={styles.cardHeader}>
                 <h2 className={styles.cardTitle}>{lib.name}</h2>
@@ -109,7 +175,6 @@ export default function DiscoveryPage() {
                 </div>
               </div>
               
-              {/* NEU: Der Action-Button */}
               <button 
                 className={`${styles.cardActionBtn} ${isSelected ? styles.cardActionBtnActive : ''}`}
                 onClick={() => toggleLibrarySelection(lib.slug)}
@@ -121,7 +186,6 @@ export default function DiscoveryPage() {
         })}
       </div>
 
-      {/* NEU: Die Sticky Bottom Bar (wird nur gerendert, wenn Array > 0 ist) */}
       {selectedLibs.length > 0 && (
         <div className={styles.stickyBar}>
           <span className={styles.stickyBarText}>

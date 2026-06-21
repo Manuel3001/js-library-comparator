@@ -8,36 +8,20 @@ import type { Library } from '../types';
 const allLibraries = librariesData as Library[];
 
 export default function ComparePage() {
-  // 1. Den Hook initialisieren, um Zugriff auf die URL-Parameter zu bekommen
   const [searchParams] = useSearchParams();
-  
-  // 2. Den Wert hinter "?libs=" aus der URL extrahieren (z.B. "zustand,redux-toolkit")
   const libsParam = searchParams.get('libs');
 
-  // 3. Die Datenmatrix dynamisch berechnen
-  // useMemo sorgt dafür, dass diese Berechnung nur stattfindet, wenn sich die URL ändert.
   const selectedLibraries = useMemo(() => {
-    // Wenn kein Parameter existiert, geben wir ein leeres Array zurück
     if (!libsParam) return [];
-    
-    // Den kommagetrennten String in ein echtes Array umwandeln: ['zustand', 'redux-toolkit']
     const slugs = libsParam.split(',');
-    
-    // Wir filtern unsere gigantische JSON-Datei und behalten nur die Libraries, 
-    // deren Slug in der URL vorkommt.
     return allLibraries.filter(lib => slugs.includes(lib.slug));
   }, [libsParam]);
 
-  // ==========================================
-  // 4. EDGE CASE: Der "Empty State"
-  // ==========================================
   if (selectedLibraries.length === 0) {
     return (
       <PageLayout>
         <header className={styles.header}>
-          <Link to="/discover" className={styles.backLink}>
-            ← Zurück zur Übersicht
-          </Link>
+          <Link to="/discover" className={styles.backLink}>← Zurück zur Übersicht</Link>
           <h1 className={styles.title}>Keine Libraries ausgewählt</h1>
           <p style={{ color: 'var(--text-muted)' }}>
             Bitte wähle auf der Discovery-Seite mindestens eine Library aus, um den Vergleich zu starten.
@@ -47,15 +31,10 @@ export default function ComparePage() {
     );
   }
 
-  // ==========================================
-  // 5. DER REGULÄRE RENDER: Die Matrix
-  // ==========================================
   return (
     <PageLayout>
       <header className={styles.header}>
-        <Link to="/discover" className={styles.backLink}>
-          ← Zurück zur Übersicht
-        </Link>
+        <Link to="/discover" className={styles.backLink}>← Zurück zur Übersicht</Link>
         <h1 className={styles.title}>Side-by-Side Vergleich</h1>
         <p>Gegenüberstellung der technischen Spezifikationen und Security-Metriken.</p>
       </header>
@@ -65,7 +44,6 @@ export default function ComparePage() {
           <thead>
             <tr>
               <th className={styles.rowLabel}></th>
-              {/* Spaltenköpfe dynamisch aus der URL generieren */}
               {selectedLibraries.map(lib => (
                 <th key={lib.id}>{lib.name}</th>
               ))}
@@ -81,10 +59,50 @@ export default function ComparePage() {
             </tr>
 
             <tr>
-              <td className={styles.rowLabel}>Bundle Size (minified + gzipped)</td>
+              <td className={styles.rowLabel}>Bundle Size</td>
               {selectedLibraries.map(lib => (
                 <td key={`size-${lib.id}`} className={styles.metricValue}>
                   {lib.bundle_size_kb} KB
+                </td>
+              ))}
+            </tr>
+
+            <tr>
+              <td className={styles.rowLabel}>Wöchentliche Downloads</td>
+              {selectedLibraries.map(lib => (
+                <td key={`downloads-${lib.id}`} className={styles.metricValue}>
+                  {new Intl.NumberFormat('de-DE').format(lib.weekly_downloads)}
+                </td>
+              ))}
+            </tr>
+
+            <tr>
+              <td className={styles.rowLabel}>GitHub Stars</td>
+              {selectedLibraries.map(lib => (
+                <td key={`stars-${lib.id}`} className={styles.metricValue}>
+                  {new Intl.NumberFormat('de-DE').format(lib.github_stars)}
+                </td>
+              ))}
+            </tr>
+
+            <tr>
+              <td className={styles.rowLabel}>Lizenz</td>
+              {selectedLibraries.map(lib => (
+                <td key={`license-${lib.id}`} className={styles.metricValue}>
+                  {lib.license}
+                </td>
+              ))}
+            </tr>
+
+            <tr>
+              <td className={styles.rowLabel}>Security Policy</td>
+              {selectedLibraries.map(lib => (
+                <td key={`sec-${lib.id}`}>
+                  {lib.has_security_policy ? (
+                    <span className={`${styles.badge} ${styles.badgeTrue}`}>Vorhanden</span>
+                  ) : (
+                    <span className={`${styles.badge} ${styles.badgeFalse}`}>Keine</span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -103,18 +121,41 @@ export default function ComparePage() {
             </tr>
 
             <tr>
-              <td className={styles.rowLabel}>GitHub Stars</td>
+              <td className={styles.rowLabel}>Vorteile (Pros)</td>
               {selectedLibraries.map(lib => (
-                <td key={`stars-${lib.id}`} className={styles.metricValue}>
-                  {new Intl.NumberFormat('de-DE').format(lib.github_stars)}
+                <td key={`pros-${lib.id}`}>
+                  <ul className={`${styles.featureList} ${styles.proList}`}>
+                    {lib.pros.map((pro, index) => (
+                      <li key={index}>{pro}</li>
+                    ))}
+                  </ul>
                 </td>
               ))}
             </tr>
 
             <tr>
-              <td className={styles.rowLabel}>Architektur & Fokus</td>
+              <td className={styles.rowLabel}>Nachteile (Cons)</td>
               {selectedLibraries.map(lib => (
-                <td key={`desc-${lib.id}`}>{lib.description}</td>
+                <td key={`cons-${lib.id}`}>
+                  <ul className={`${styles.featureList} ${styles.conList}`}>
+                    {lib.cons.map((con, index) => (
+                      <li key={index}>{con}</li>
+                    ))}
+                  </ul>
+                </td>
+              ))}
+            </tr>
+
+            <tr>
+              <td className={styles.rowLabel}>Code-Beispiel</td>
+              {selectedLibraries.map(lib => (
+                <td key={`code-${lib.id}`}>
+                  <div className={styles.codeContainer}>
+                    <pre className={styles.codeBlock}>
+                      <code>{lib.code_example}</code>
+                    </pre>
+                  </div>
+                </td>
               ))}
             </tr>
           </tbody>

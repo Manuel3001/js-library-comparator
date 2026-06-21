@@ -86,3 +86,75 @@
   color: var(--accent-success);
   font-weight: 700;
 }
+
+/* --- Erweiterungen für die neuen Eigenschaften --- */
+
+/* Listen für Pros & Cons */
+.featureList {
+  list-style: none;
+  padding: 0;
+}
+
+.featureList li {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+/* Grüne Pluszeichen für Pros */
+.proList li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  color: var(--accent-success);
+  font-weight: 700;
+}
+
+/* Rote Minuszeichen für Cons */
+.conList li::before {
+  content: "−";
+  position: absolute;
+  left: 0;
+  color: var(--accent-danger);
+  font-weight: 700;
+}
+
+/* Aufwendiges Terminal-Design für das Code-Beispiel */
+.codeContainer {
+  background-color: #05070a; /* Noch dunklerer Hintergrund für Code */
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto; /* Falls der Code zu lang ist */
+  max-width: 400px; /* Begrenzt die Breite im Grid */
+}
+
+.codeBlock {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #e6edf3;
+  white-space: pre; /* Behält Zeilenumbrüche und Einrückungen bei */
+  margin: 0;
+}
+
+/* Status-Badges für Booleans */
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.badgeTrue {
+  background-color: rgba(63, 185, 80, 0.1);
+  color: var(--accent-success);
+  border: 1px solid var(--accent-success);
+}
+
+.badgeFalse {
+  background-color: rgba(248, 81, 73, 0.1);
+  color: var(--accent-danger);
+  border: 1px solid var(--accent-danger);
+}
