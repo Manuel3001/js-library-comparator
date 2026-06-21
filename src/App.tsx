@@ -1,7 +1,8 @@
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import {Routes, Route, Link} from 'react-router-dom';
 import ComparePage from './pages/ComparePage';
 import DiscoveryPage from './pages/DiscoveryPage';
 import HomePage from './pages/HomePage';
+
 export default function App() {
   return (
     <>

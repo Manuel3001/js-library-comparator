@@ -1,3 +1,88 @@
-h1 {
-  color: blue;
+.header {
+  margin-bottom: 3rem;
+}
+
+.backLink {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--text-bright);
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Der Wrapper ist extrem wichtig, damit die Tabelle auf kleinen Bildschirmen
+   horizontal scrollbar wird, ohne das gesamte Seitenlayout zu sprengen. */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  /* Versteckt die Ecken der Tabelle sauber im abgerundeten Rahmen */
+  overflow: hidden; 
+}
+
+.compareTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 800px; /* Erzwingt das Scrollen, wenn der Platz zu eng wird */
+}
+
+/* Die Kopfzeile (Library Namen) bleibt beim vertikalen Scrollen oben kleben */
+.compareTable th {
+  padding: 1.5rem 1rem;
+  background-color: #1a1f26; /* Ein minimal hellerer Ton zur Abhebung */
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1.25rem;
+  color: var(--text-bright);
+}
+
+/* Die Datenzellen */
+.compareTable td {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: top;
+}
+
+/* Die erste Spalte (Die Kategorien wie "Bundle Size") bleibt beim 
+   horizontalen Scrollen links kleben */
+.rowLabel {
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 250px;
+  background-color: var(--bg-surface);
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  /* Ein feiner Schatten rechts, um zu zeigen, dass man darunter scrollen kann */
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2); 
+}
+
+/* Typografie für harte Metriken */
+.metricValue {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+/* Spezifische Farben für den Security/Performance-Fokus */
+.cveDanger {
+  color: var(--accent-danger);
+  font-weight: 700;
+}
+
+.cveSuccess {
+  color: var(--accent-success);
+  font-weight: 700;
 }
