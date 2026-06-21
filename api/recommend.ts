@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Wir importieren unsere Datenbank direkt ins Backend
-import librariesData from '../src/data/libraries.json';
+import librariesData from '../src/data/libraries.json' with { type: "json" };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 1. Security-Check: Wir erlauben nur POST-Anfragen, da wir Daten (den Prompt) senden
