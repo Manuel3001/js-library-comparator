@@ -26,10 +26,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     // 4. KI initialisieren (Wir nutzen gemini-1.5-flash für maximale Geschwindigkeit)
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-    // 5. Prompt Engineering: "RAG-Light" (Retrieval-Augmented Generation)
-    // Wir bauen einen massiven System-Prompt zusammen, der die KI in eine Rolle zwingt
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });    // Wir bauen einen massiven System-Prompt zusammen, der die KI in eine Rolle zwingt
     // und ihr exakt unser Datenformat als alleinige Wahrheit vorgibt.
     const systemInstruction = `
       Du bist ein hochkarätiger, analytischer Software Architect. 
