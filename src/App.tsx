@@ -7,7 +7,7 @@ export default function App() {
   return (
     <>
     {/* a simple navigation bar for testing */}
-        <nav>
+        <nav style={{ display: 'flex', gap: '20px', padding: '10px', backgroundColor: '#ff00ff' }}>
             <Link to="/discovery">Discovery</Link>
             <Link to="/compare">Compare</Link>
             <Link to="/">Home</Link>

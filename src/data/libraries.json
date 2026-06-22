@@ -1,186 +1,98 @@
 [
   {
-    "id": 1,
-    "name": "Zustand",
-    "slug": "zustand",
-    "category": "State Management",
-    "description": "Ein kleines, schnelles und skalierbares Statusverwaltungssystem, das auf vereinfachten Flux-Prinzipien basiert. Kommt ohne viel Boilerplate aus.",
-    "bundle_size_kb": 1.2,
-    "github_stars": 45200,
-    "weekly_downloads": 3500000,
+    "id": 9,
+    "name": "TanStack Query",
+    "slug": "tanstack-query",
+    "category": "Data Fetching",
+    "description": "Das Kraftpaket für asynchrones State Management. Übernimmt Caching, Background-Updating und Stale-State-Handling komplett automatisch.",
+    "bundle_size_kb": 12.5,
+    "github_stars": 38000,
+    "weekly_downloads": 3000000,
     "license": "MIT",
     "has_security_policy": true,
     "unresolved_cves": 0,
-    "pros": [
-      "Extrem leichtgewichtig (1.2KB)",
-      "Kein Context-Provider notwendig",
-      "Sehr intuitive Hooks-API"
-    ],
-    "cons": [
-      "Weniger vordefinierte Middleware als Redux",
-      "Lernkurve bei komplexen Multi-Store-Architekturen"
-    ],
-    "code_example": "import { create } from 'zustand'\n\nconst useStore = create((set) => ({\n  bears: 0,\n  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),\n}))"
+    "pros": ["Automatische Cache-Invalidierung", "Extrem mächtige DevTools", "Reduziert API-Boilerplate massiv"],
+    "cons": ["Kann bei sehr einfachen Projekten übertrieben wirken"],
+    "code_example": "const { data } = useQuery({ queryKey: ['todos'], queryFn: fetchTodos })"
   },
   {
-    "id": 2,
-    "name": "React",
-    "slug": "react",
-    "category": "Frontend Framework",
-    "description": "Die populärste UI-Bibliothek. Bietet maximale Flexibilität, ein riesiges Ökosystem und setzt auf ein komponentenbasiertes Modell mit Virtual DOM.",
-    "bundle_size_kb": 42.1,
-    "github_stars": 221000,
-    "weekly_downloads": 22000000,
+    "id": 10,
+    "name": "Tailwind CSS",
+    "slug": "tailwind-css",
+    "category": "Styling",
+    "description": "Utility-First CSS-Framework. Erlaubt es, moderne Interfaces direkt im HTML/JSX zu bauen, ohne jemals eine separate CSS-Datei anfassen zu müssen.",
+    "bundle_size_kb": 0,
+    "github_stars": 75000,
+    "weekly_downloads": 8000000,
     "license": "MIT",
     "has_security_policy": true,
     "unresolved_cves": 0,
-    "pros": [
-      "Gigantisches Ökosystem und Community",
-      "Maximale Flexibilität bei der Architektur",
-      "Sehr gute Performance durch Virtual DOM"
-    ],
-    "cons": [
-      "Hoher Boilerplate bei großen Anwendungen",
-      "Steile Lernkurve bei komplexem useEffect-Einsatz"
-    ],
-    "code_example": "import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return <button onClick={() => setCount(count + 1)}>{count}</button>;\n}"
+    "pros": ["Enorme Entwicklungsgeschwindigkeit", "Keine namengebungs-Probleme für Klassen", "Sehr konsistentes Design-System"],
+    "cons": ["Klassen-Chaos im JSX", "Benötigt Build-Step"],
+    "code_example": "<div className=\"flex items-center justify-center bg-blue-500 p-4\">...</div>"
   },
   {
-    "id": 3,
-    "name": "Vue.js",
-    "slug": "vue",
-    "category": "Frontend Framework",
-    "description": "Das progressive Framework. Bekannt für seine flache Lernkurve, intuitive Template-Syntax und das reaktive Proxies-System.",
-    "bundle_size_kb": 33.6,
-    "github_stars": 206000,
-    "weekly_downloads": 4500000,
-    "license": "MIT",
+    "id": 11,
+    "name": "Prisma",
+    "slug": "prisma",
+    "category": "ORM",
+    "description": "Der moderne Industriestandard für Datenbank-Interaktionen in Node.js/TypeScript. Bietet strikte Type-Safety durch ein generiertes Client-Modell.",
+    "bundle_size_kb": 150.0,
+    "github_stars": 36000,
+    "weekly_downloads": 2000000,
+    "license": "Apache-2.0",
     "has_security_policy": true,
     "unresolved_cves": 0,
-    "pros": [
-      "Sehr flache Lernkurve",
-      "Exzellente, strukturierte Dokumentation",
-      "Reaktivität funktioniert out-of-the-box"
-    ],
-    "cons": [
-      "Kleineres Enterprise-Ökosystem als React",
-      "Fragmentierung durch Options vs. Composition API"
-    ],
-    "code_example": "<script setup>\nimport { ref } from 'vue'\nconst count = ref(0)\n</script>\n\n<template>\n  <button @click=\"count++\">{{ count }}</button>\n</template>"
+    "pros": ["Unglaubliche Developer Experience", "Auto-generierte TypeScript Typen", "Sehr intuitives Schema-Management"],
+    "cons": ["Hoher Speicherverbrauch durch den Query-Engine-Prozess"],
+    "code_example": "const user = await prisma.user.create({ data: { email: 'test@test.com' } })"
   },
   {
-    "id": 4,
-    "name": "Angular",
-    "slug": "angular",
-    "category": "Frontend Framework",
-    "description": "Die Full-Service-Plattform von Google. Bietet alles aus einer Hand (Routing, Forms, HTTP) und setzt strikt auf TypeScript und RxJS.",
-    "bundle_size_kb": 143.0,
-    "github_stars": 94500,
-    "weekly_downloads": 3200000,
+    "id": 12,
+    "name": "Axios",
+    "slug": "axios",
+    "category": "HTTP Client",
+    "description": "Der Klassiker für HTTP-Requests. Bietet Interceptors, Request-Cancellation und Client-seitigen Schutz gegen XSRF.",
+    "bundle_size_kb": 11.5,
+    "github_stars": 102000,
+    "weekly_downloads": 35000000,
     "license": "MIT",
     "has_security_policy": true,
     "unresolved_cves": 0,
-    "pros": [
-      "Komplette All-in-One Lösung",
-      "Strikte Architektur, perfekt für große Teams",
-      "Mächtige Dependency Injection"
-    ],
-    "cons": [
-      "Sehr große Bundle-Size",
-      "Komplexes RxJS-Konzept erfordert viel Einarbeitung"
-    ],
-    "code_example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-counter',\n  template: `<button (click)=\"count = count + 1\">{{ count }}</button>`\n})\nexport class CounterComponent {\n  count = 0;\n}"
+    "pros": ["Sehr einfach zu bedienen", "Funktioniert in Node und Browser identisch", "Native JSON-Transformation"],
+    "cons": ["Größer als die native `fetch`-API"],
+    "code_example": "axios.get('/user?ID=12345').then(response => console.log(response))"
   },
   {
-    "id": 5,
-    "name": "Svelte",
-    "slug": "svelte",
-    "category": "Frontend Framework",
-    "description": "Das radikale Compiler-Framework. Es verschwindet zur Laufzeit fast vollständig und manipuliert das Real-DOM direkt – ohne Virtual DOM Ruckler.",
-    "bundle_size_kb": 12.8,
-    "github_stars": 76100,
-    "weekly_downloads": 1100000,
+    "id": 13,
+    "name": "Framer Motion",
+    "slug": "framer-motion",
+    "category": "Animation",
+    "description": "Die führende Animations-Bibliothek für React. Deklarative Motion-Komponenten machen komplexe UI-Animationen zum Kinderspiel.",
+    "bundle_size_kb": 30.0,
+    "github_stars": 23000,
+    "weekly_downloads": 4000000,
     "license": "MIT",
     "has_security_policy": true,
     "unresolved_cves": 0,
-    "pros": [
-      "Kein Virtual DOM Overhead",
-      "Minimalistische und extrem saubere Syntax",
-      "Herausragend kleine Bundle-Sizes"
-    ],
-    "cons": [
-      "Vergleichsweise kleines Ökosystem",
-      "Größeres Compiler-Output bei sehr vielen Komponenten"
-    ],
-    "code_example": "<script>\n  let count = 0;\n</script>\n\n<button on:click={() => count++}>\n  {count}\n</button>"
+    "pros": ["Sehr flüssige 60fps Animationen", "Hervorragende API für Gesten", "Layout-Animationen inklusive"],
+    "cons": ["Kann die Bundle-Size bei exzessiver Nutzung spürbar erhöhen"],
+    "code_example": "<motion.div animate={{ x: 100 }} transition={{ duration: 0.5 }} />"
   },
   {
-    "id": 6,
-    "name": "Redux Toolkit",
-    "slug": "redux-toolkit",
-    "category": "State Management",
-    "description": "Der moderne Industriestandard für Redux. Vereinfacht die Erstellung von Stores, Reducern und Actions massiv und verhindert Immutability-Fehler.",
-    "bundle_size_kb": 13.9,
-    "github_stars": 11500,
-    "weekly_downloads": 3800000,
+    "id": 14,
+    "name": "Zod",
+    "slug": "zod",
+    "category": "Validation",
+    "description": "TypeScript-first Schema-Validation. Definiere dein Schema einmal und Zod kümmert sich um die Validierung und die Types.",
+    "bundle_size_kb": 12.0,
+    "github_stars": 33000,
+    "weekly_downloads": 12000000,
     "license": "MIT",
     "has_security_policy": true,
     "unresolved_cves": 0,
-    "pros": [
-      "Verhindert verdeckte Mutationen durch Immer.js",
-      "Integrierte asynchrone Logik (createAsyncThunk)",
-      "Exzellente DevTools-Integration"
-    ],
-    "cons": [
-      "Trotz Reduktion immer noch mehr Boilerplate als Zustand",
-      "Für kleine Apps oft architektonischer Overkill"
-    ],
-    "code_example": "import { createSlice } from '@reduxjs/toolkit'\n\nconst counterSlice = createSlice({\n  name: 'counter',\n  initialState: 0,\n  reducers: {\n    increment: state => state + 1\n  }\n})"
-  },
-  {
-    "id": 7,
-    "name": "Express",
-    "slug": "express",
-    "category": "Backend Server",
-    "description": "Der unangefochtene Standard für Node.js Server. Minimalistisch, unaufdringlich und die Basis für unzählige andere Frameworks.",
-    "bundle_size_kb": 51.0,
-    "github_stars": 63500,
-    "weekly_downloads": 31000000,
-    "license": "MIT",
-    "has_security_policy": true,
-    "unresolved_cves": 0,
-    "pros": [
-      "Extrem robust und in Millionen Projekten erprobt",
-      "Sehr minimalistisch und flexibel",
-      "Massives Angebot an fertigen Middlewares"
-    ],
-    "cons": [
-      "Keine vorgegebene Architektur (kann zu Chaos führen)",
-      "Fehlender nativer TypeScript-Support (benötigt Setup)"
-    ],
-    "code_example": "import express from 'express';\nconst app = express();\n\napp.get('/', (req, res) => {\n  res.send('Hello World!');\n});\napp.listen(3000);"
-  },
-  {
-    "id": 8,
-    "name": "NestJS",
-    "slug": "nestjs",
-    "category": "Backend Server",
-    "description": "Das Architektur-Framework. Bringt Ordnung in Node.js-Projekte mit Konzepten wie Dependency Injection, Modulen und Dekoratoren.",
-    "bundle_size_kb": 320.0,
-    "github_stars": 65800,
-    "weekly_downloads": 3500000,
-    "license": "MIT",
-    "has_security_policy": true,
-    "unresolved_cves": 0,
-    "pros": [
-      "Strikte, skalierbare Architektur",
-      "First-Class TypeScript Support",
-      "Mächtige Dependency Injection und CLI-Tools"
-    ],
-    "cons": [
-      "Großer Overhead für einfache Microservices",
-      "Sehr steile Lernkurve, stark an Angular angelehnt"
-    ],
-    "code_example": "import { Controller, Get } from '@nestjs/common';\n\n@Controller('cats')\nexport class CatsController {\n  @Get()\n  findAll(): string {\n    return 'This action returns all cats';\n  }\n}"
+    "pros": ["Kein Duplizieren von Types und Validierungslogik", "Sehr expressives API", "Läuft in jeder JS-Umgebung"],
+    "cons": ["Kann bei sehr komplexen rekursiven Schemas CPU-intensiv sein"],
+    "code_example": "const schema = z.object({ name: z.string() }); schema.parse({ name: 'Manuel' });"
   }
 ]
