@@ -7,10 +7,10 @@ export default function App() {
   return (
     <>
     {/* a simple navigation bar for testing */}
-        <nav style={{ display: 'flex', gap: '20px', padding: '10px', backgroundColor: '#ff00ff', color: '#ffffff' }}>
-            <Link to="/discovery">Discovery</Link>
-            <Link to="/compare">Compare</Link>
-            <Link to="/">Home</Link>
+        <nav style={{ display: 'flex', gap: '20px', padding: '10px', backgroundColor: '#ff00ff'}}>
+            <Link style={{ color: '#ffffff', textDecoration: 'none' }} to="/discovery">Discovery</Link>
+            <Link style={{ color: '#ffffff', textDecoration: 'none' }} to="/compare">Compare</Link>
+            <Link style={{ color: '#ffffff', textDecoration: 'none' }} to="/">Home</Link>
         </nav>
           <h1>JS Library Comparator</h1>
         {/* Define the routes */}
